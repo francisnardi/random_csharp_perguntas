@@ -219,7 +219,8 @@ public class Singleton
             // Garante que apenas uma thread possa criar a instância
             lock (lockObject)
             {
-                // Verifica novamente se a instância ainda é nula, pois outra thread pode ter criado enquanto estava esperando o lock
+                // Verifica novamente se a instância ainda é nula,
+                // pois outra thread pode ter criado enquanto estava esperando o lock
                 if (instance == null)
                 {
                     instance = new Singleton();
