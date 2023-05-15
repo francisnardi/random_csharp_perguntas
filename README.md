@@ -601,3 +601,47 @@ Isso permite a substituição fácil de diferentes formas geométricas no servi�
 As interfaces também são úteis para facilitar a simulação e o teste de unidades. Por exemplo, você pode criar uma implementação de teste `MockShape` que implementa `IShape` para testar o serviço de desenho em isolamento.
 
 Em resumo, as interfaces permitem que você defina contratos, promovam o polimorfismo, facilitem a modularidade e forneçam flexibilidade no código em C#. Elas são uma ferramenta poderosa para abstrair comportamentos comuns e promover uma melhor organização e extensibilidade do código.
+
+<hr>
+Pergunta 13: Dê um exemplo de teste de unidade em C#.
+
+Resposta: Aqui está um exemplo simples de um teste de unidade em C# usando o framework de testes NUnit:
+
+Suponha que temos uma classe chamada `Calculator`, que contém um método `Add` para somar dois números inteiros. Vamos escrever um teste de unidade para garantir que o método `Add` funcione corretamente.
+
+```csharp
+using NUnit.Framework;
+
+public class Calculator
+{
+    public int Add(int a, int b)
+    {
+        return a + b;
+    }
+}
+
+[TestFixture]
+public class CalculatorTests
+{
+    [Test]
+    public void Add_WhenCalled_ReturnsSumOfTwoNumbers()
+    {
+        // Arrange
+        Calculator calculator = new Calculator();
+
+        // Act
+        int result = calculator.Add(2, 3);
+
+        // Assert
+        Assert.AreEqual(5, result);
+    }
+}
+```
+
+Nesse exemplo, criamos uma classe de teste chamada `CalculatorTests` e definimos um método de teste chamado `Add_WhenCalled_ReturnsSumOfTwoNumbers`. Dentro desse método de teste, criamos uma instância da classe `Calculator` e chamamos o método `Add` com os números 2 e 3.
+
+Em seguida, usamos o método `Assert.AreEqual` para verificar se o resultado retornado pelo método `Add` é igual a 5, que é a soma esperada de 2 e 3.
+
+Ao executar o teste, o framework de testes (por exemplo, NUnit) verifica se o resultado obtido é igual ao resultado esperado. Se forem iguais, o teste passa. Caso contrário, o teste falha e uma mensagem de erro é exibida.
+
+Os testes de unidade são essenciais para verificar se o código está funcionando corretamente e para detectar possíveis problemas ou regressões. Eles ajudam a garantir a qualidade do código e fornecem confiança ao fazer alterações no código no futuro, sabendo que os testes podem identificar quaisquer quebras de funcionalidade.
