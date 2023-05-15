@@ -549,3 +549,55 @@ Resposta: As interfaces desempenham um papel fundamental em C# e têm várias im
 - Acoplamento Fraco: O uso de interfaces promove um acoplamento fraco entre os componentes do código. Uma classe que depende de uma interface não está vinculada a uma implementação específica, mas sim ao contrato definido pela interface. Isso facilita a substituição de implementações, tornando o código mais flexível e extensível.
 
 - Em resumo, as interfaces são importantes em C# porque fornecem uma forma de definir contratos, promovem a abstração e o polimorfismo, separam responsabilidades, facilitam a testabilidade e permitem um acoplamento fraco entre os componentes do código. Elas desempenham um papel crucial na construção de um código modular, flexível e de fácil manutenção.
+
+```csharp
+// Exemplo de interface
+public interface IShape
+{
+    void Draw();
+}
+
+// Classes que implementam a interface
+public class Circle : IShape
+{
+    public void Draw()
+    {
+        Console.WriteLine("Drawing a circle");
+    }
+}
+
+public class Square : IShape
+{
+    public void Draw()
+    {
+        Console.WriteLine("Drawing a square");
+    }
+}
+
+// Classe que usa a interface
+public class DrawingService
+{
+    public void DrawShape(IShape shape)
+    {
+        shape.Draw();
+    }
+}
+
+// Uso do serviço de desenho
+var drawingService = new DrawingService();
+var circle = new Circle();
+var square = new Square();
+
+drawingService.DrawShape(circle); // Saída: "Drawing a circle"
+drawingService.DrawShape(square); // Saída: "Drawing a square"
+```
+
+Nesse exemplo, a interface `IShape` define o contrato para objetos que podem ser desenhados. As classes `Circle` e `Square` implementam essa interface, fornecendo sua própria implementação do método `Draw()`. A classe `DrawingService` recebe um objeto que implementa a interface `IShape` e invoca o método `Draw()` sobre ele.
+
+A importância aqui é que, ao usar a interface `IShape`, a classe `DrawingService` não precisa se preocupar com os detalhes internos das implementações específicas de `Circle` ou `Square`. Ela apenas sabe que pode chamar o método `Draw()` em qualquer objeto que implemente `IShape`, independentemente do tipo concreto.
+
+Isso permite a substituição fácil de diferentes formas geométricas no serviço de desenho, sem a necessidade de alterar a implementação do serviço em si. Você pode adicionar mais classes que implementam `IShape` (por exemplo, `Triangle`, `Rectangle`, etc.) sem afetar o código existente.
+
+As interfaces também são úteis para facilitar a simulação e o teste de unidades. Por exemplo, você pode criar uma implementação de teste `MockShape` que implementa `IShape` para testar o serviço de desenho em isolamento.
+
+Em resumo, as interfaces permitem que você defina contratos, promovam o polimorfismo, facilitem a modularidade e forneçam flexibilidade no código em C#. Elas são uma ferramenta poderosa para abstrair comportamentos comuns e promover uma melhor organização e extensibilidade do código.
