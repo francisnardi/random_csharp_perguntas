@@ -312,3 +312,125 @@ public class Circle : IShape
 Neste exemplo, a interface `IShape` define dois métodos, `CalculateArea()` e `Draw()`, mas não fornece implementações. A classe `Circle` implementa a interface `IShape` e fornece implementações para ambos os métodos da interface.
 
 Resumindo, uma classe abstrata pode ter implementações de métodos, enquanto uma interface só pode ter definições de métodos. Uma classe pode herdar apenas de uma classe abstrata, mas pode implementar várias interfaces. As classes abstratas são úteis quando você quer fornecer uma implementação padrão e também exigir que as classes derivadas forneçam sua própria implementação para certos métodos. As interfaces são úteis quando você deseja definir um conjunto de métodos e propriedades que as classes devem implementar, independentemente de sua hierarquia de herança.
+
+<hr>
+Pergunta 11: Mostrar implementações de padrões de projetos em C# com uso do SOLID.
+
+Resposta: Vou mostrar exemplos de implementações de alguns padrões de projeto com o uso dos princípios SOLID em C#.
+
+- Padrão de Projeto: Singleton (Creational)
+
+    O padrão Singleton permite que você garanta que uma classe tenha apenas uma instância e fornece um ponto de acesso global para essa instância. Aqui está um exemplo de implementação em C#:
+
+```csharp
+public class Singleton
+{
+    private static Singleton instance;
+    private static readonly object lockObject = new object();
+
+    private Singleton()
+    {
+        // Construtor privado para evitar instanciação direta.
+    }
+
+    public static Singleton Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                lock (lockObject)
+                {
+                    if (instance == null)
+                    {
+                        instance = new Singleton();
+                    }
+                }
+            }
+            return instance;
+        }
+    }
+
+    // Outros membros da classe...
+}
+
+```
+
+- Padrão de Projeto: Factory Method (Creational)
+
+    O padrão Factory Method define um método que delega a criação de objetos para as subclasses, permitindo que a classe base defina a interface, mas deixe as subclasses decidirem quais objetos concretos criar. Aqui está um exemplo de implementação em C#:
+
+```csharp
+public abstract class Creator
+{
+    public abstract IProduct FactoryMethod();
+
+    public void SomeOperation()
+    {
+        // Lógica antes ou depois da criação do produto
+        IProduct product = FactoryMethod();
+        // Lógica com o produto criado
+    }
+}
+
+public interface IProduct
+{
+    // Interface do produto
+}
+
+public class ConcreteCreator : Creator
+{
+    public override IProduct FactoryMethod()
+    {
+        return new ConcreteProduct();
+    }
+}
+
+public class ConcreteProduct : IProduct
+{
+    // Implementação do produto
+}
+```
+
+- Padrão de Projeto: Strategy (Behavioral)
+
+    O padrão Strategy define uma família de algoritmos encapsulados e os torna intercambiáveis. Isso permite que o algoritmo varie independentemente dos clientes que o utilizam. Aqui está um exemplo de implementação em C#:
+
+```csharp
+public interface IStrategy
+{
+    void Execute();
+}
+
+public class ConcreteStrategyA : IStrategy
+{
+    public void Execute()
+    {
+        // Lógica específica para a estratégia A
+    }
+}
+
+public class ConcreteStrategyB : IStrategy
+{
+    public void Execute()
+    {
+        // Lógica específica para a estratégia B
+    }
+}
+
+public class Context
+{
+    private IStrategy strategy;
+
+    public Context(IStrategy strategy)
+    {
+        this.strategy = strategy;
+    }
+
+    public void ExecuteStrategy()
+    {
+        strategy.Execute();
+    }
+}
+```
+
