@@ -434,3 +434,118 @@ public class Context
 }
 ```
 
+- Padrão de Projeto: Dependency Injection (DI) (Creational)
+
+    O padrão Dependency Injection permite que você injete as dependências de uma classe em vez de criá-las internamente. Isso ajuda a promover a modularidade e a facilitar a substituição de implementações. Aqui está um exemplo de implementação em C# usando o contêiner de injeção de dependência do ASP.NET Core:
+
+```csharp
+public interface IService
+{
+    void DoSomething();
+}
+
+public class Service : IService
+{
+    public void DoSomething()
+    {
+        // Implementação do serviço
+    }
+}
+
+public class Client
+{
+    private readonly IService service;
+
+    public Client(IService service)
+    {
+        this.service = service;
+    }
+
+    public void UseService()
+    {
+        // Utilização do serviço
+        service.DoSomething();
+    }
+}
+
+// Configuração do contêiner de injeção de dependência (exemplo usando ASP.NET Core)
+services.AddScoped<IService, Service>();
+services.AddScoped<Client>();
+```
+
+- Padrão de Projeto: Decorator (Structural)
+
+    O padrão Decorator permite que você adicione comportamentos adicionais a um objeto dinamicamente, envolvendo-o em um objeto decorador. Isso evita a necessidade de criar subclasses para cada combinação de comportamentos. Aqui está um exemplo de implementação em C#:
+
+```csharp
+public interface IComponent
+{
+    void Operation();
+}
+
+public class ConcreteComponent : IComponent
+{
+    public void Operation()
+    {
+        // Implementação do componente concreto
+    }
+}
+
+public abstract class Decorator : IComponent
+{
+    private readonly IComponent component;
+
+    public Decorator(IComponent component)
+    {
+        this.component = component;
+    }
+
+    public virtual void Operation()
+    {
+        component.Operation();
+    }
+}
+
+public class ConcreteDecoratorA : Decorator
+{
+    public ConcreteDecoratorA(IComponent component) : base(component)
+    {
+    }
+
+    public override void Operation()
+    {
+        // Lógica adicional do decorador A
+        base.Operation();
+    }
+}
+
+public class ConcreteDecoratorB : Decorator
+{
+    public ConcreteDecoratorB(IComponent component) : base(component)
+    {
+    }
+
+    public override void Operation()
+    {
+        // Lógica adicional do decorador B
+        base.Operation();
+    }
+}
+```
+
+<hr>
+Pergunta 12: Qual a importância das interfaces para o C#?
+
+Resposta: As interfaces desempenham um papel fundamental em C# e têm várias importâncias na linguagem. Aqui estão algumas razões pelas quais as interfaces são importantes em C#:
+
+- Abstração e Polimorfismo: As interfaces fornecem um mecanismo para a abstração de comportamentos. Elas permitem definir contratos que as classes devem seguir, especificando os métodos e propriedades que devem ser implementados. Isso permite que você trabalhe com objetos de diferentes classes de forma polimórfica, tratando-os como instâncias da interface comum. Isso promove a flexibilidade e a modularidade do código.
+
+- Separação de Responsabilidades: Ao usar interfaces, você pode separar as responsabilidades em seu código. Uma classe pode implementar várias interfaces, cada uma representando um conjunto específico de comportamentos. Isso permite que você agrupe funcionalidades relacionadas e as distribua em várias classes, mantendo um código mais organizado e coeso.
+
+- Contratos e Contratos Implícitos: As interfaces definem contratos entre as classes e o código que as utiliza. Esses contratos especificam quais comportamentos são esperados de uma classe que implementa uma determinada interface. Isso facilita a comunicação e a colaboração entre diferentes partes do código, pois todas as classes que implementam uma interface têm a garantia de fornecer a funcionalidade especificada pela interface.
+
+- Facilita a Testabilidade: O uso de interfaces facilita a criação de testes unitários e a realização de testes de isolamento. Ao utilizar interfaces, você pode criar implementações de teste que simulam o comportamento esperado das classes que implementam as interfaces. Isso permite que você teste cada componente do sistema de forma independente, substituindo as implementações reais por implementações de teste.
+
+- Acoplamento Fraco: O uso de interfaces promove um acoplamento fraco entre os componentes do código. Uma classe que depende de uma interface não está vinculada a uma implementação específica, mas sim ao contrato definido pela interface. Isso facilita a substituição de implementações, tornando o código mais flexível e extensível.
+
+- Em resumo, as interfaces são importantes em C# porque fornecem uma forma de definir contratos, promovem a abstração e o polimorfismo, separam responsabilidades, facilitam a testabilidade e permitem um acoplamento fraco entre os componentes do código. Elas desempenham um papel crucial na construção de um código modular, flexível e de fácil manutenção.
