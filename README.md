@@ -249,3 +249,60 @@ instance.DoSomething();
 ```
 
 Ao chamar `GetInstance()`, você obterá a mesma instância da classe Singleton toda vez que for chamada em qualquer parte do código. Isso permite que você compartilhe informações e recursos entre diferentes componentes da aplicação.
+
+<hr>
+Pergunta 10: Mostrar implementações de padrões de projetos em C# com uso do SOLID.
+
+Resposta: Em C#, o Singleton é um padrão de projeto que garante que uma classe tenha apenas uma instância em toda a aplicação e fornece um ponto de acesso global para essa instância. Isso é útil quando você deseja ter uma única instância compartilhada por várias partes do código, como configurações globais, conexões de banco de dados ou logs.
+
+Aqui está um exemplo de implementação do padrão Singleton em C#:
+
+```csharp
+public class Singleton
+{
+    private static Singleton instance;
+    private static readonly object lockObject = new object();
+
+    // Construtor privado para evitar a criação direta de instâncias
+    private Singleton()
+    {
+        // Inicialize os membros necessários
+    }
+
+    public static Singleton GetInstance()
+    {
+        // Verifica se a instância já existe
+        if (instance == null)
+        {
+            // Garante que apenas uma thread possa criar a instância
+            lock (lockObject)
+            {
+                // Verifica novamente se a instância ainda é nula, pois outra thread pode ter criado enquanto estava esperando o lock
+                if (instance == null)
+                {
+                    instance = new Singleton();
+                }
+            }
+        }
+
+        return instance;
+    }
+
+    // Métodos de instância
+    public void DoSomething()
+    {
+        // Implemente a lógica desejada
+    }
+}
+```
+
+Nesse exemplo, a classe Singleton possui um construtor privado, impedindo a criação direta de instâncias fora da classe. Em vez disso, a instância única é obtida chamando o método estático `GetInstance()`, que implementa a lógica para criar a instância caso ainda não exista. O uso do bloqueio (`lock`) garante que apenas uma thread possa criar a instância em um ambiente multi-threaded.
+
+Para usar a classe Singleton, você pode chamá-la da seguinte maneira:
+
+```csharp
+Singleton instance = Singleton.GetInstance();
+instance.DoSomething();
+```
+
+Ao chamar `GetInstance()`, você obterá a mesma instância da classe Singleton toda vez que for chamada em qualquer parte do código. Isso permite que você compartilhe informações e recursos entre diferentes componentes da aplicação.
