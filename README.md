@@ -251,58 +251,64 @@ instance.DoSomething();
 Ao chamar `GetInstance()`, você obterá a mesma instância da classe Singleton toda vez que for chamada em qualquer parte do código. Isso permite que você compartilhe informações e recursos entre diferentes componentes da aplicação.
 
 <hr>
-Pergunta 10: Mostrar implementações de padrões de projetos em C# com uso do SOLID.
+Pergunta 10: Qual a diferença entre classes abstratas e interfaces? Exemplifique com código.
 
-Resposta: Em C#, o Singleton é um padrão de projeto que garante que uma classe tenha apenas uma instância em toda a aplicação e fornece um ponto de acesso global para essa instância. Isso é útil quando você deseja ter uma única instância compartilhada por várias partes do código, como configurações globais, conexões de banco de dados ou logs.
-
-Aqui está um exemplo de implementação do padrão Singleton em C#:
+Resposta: Claro! Vou exemplificar a diferença entre classes abstratas e interfaces em C# com código. Primeiro, vamos começar com uma classe abstrata:
 
 ```csharp
-public class Singleton
+public abstract class Animal
 {
-    private static Singleton instance;
-    private static readonly object lockObject = new object();
+    public abstract void EmitSound(); // Método abstrato sem implementação
 
-    // Construtor privado para evitar a criação direta de instâncias
-    private Singleton()
+    public void Sleep()
     {
-        // Inicialize os membros necessários
+        Console.WriteLine("Animal is sleeping."); // Método com implementação
     }
+}
 
-    public static Singleton GetInstance()
+public class Dog : Animal
+{
+    public override void EmitSound()
     {
-        // Verifica se a instância já existe
-        if (instance == null)
-        {
-            // Garante que apenas uma thread possa criar a instância
-            lock (lockObject)
-            {
-                // Verifica novamente se a instância ainda é nula, pois outra thread pode ter criado enquanto estava esperando o lock
-                if (instance == null)
-                {
-                    instance = new Singleton();
-                }
-            }
-        }
-
-        return instance;
-    }
-
-    // Métodos de instância
-    public void DoSomething()
-    {
-        // Implemente a lógica desejada
+        Console.WriteLine("Woof!"); // Implementação do método abstrato
     }
 }
 ```
 
-Nesse exemplo, a classe Singleton possui um construtor privado, impedindo a criação direta de instâncias fora da classe. Em vez disso, a instância única é obtida chamando o método estático `GetInstance()`, que implementa a lógica para criar a instância caso ainda não exista. O uso do bloqueio (`lock`) garante que apenas uma thread possa criar a instância em um ambiente multi-threaded.
+Neste exemplo, a classe `Animal` é uma classe abstrata que define um método abstrato `EmitSound()` sem fornecer uma implementação. A classe também tem um método concreto `Sleep()` que fornece uma implementação padrão.
 
-Para usar a classe Singleton, você pode chamá-la da seguinte maneira:
+A classe `Dog` herda da classe `Animal` e implementa o método abstrato `EmitSound()` definido pela classe base.
+
+Agora, vamos ver um exemplo de interface:
 
 ```csharp
-Singleton instance = Singleton.GetInstance();
-instance.DoSomething();
+public interface IShape
+{
+    double CalculateArea(); // Método sem implementação
+    void Draw();
+}
+
+public class Circle : IShape
+{
+    private double radius;
+
+    public Circle(double radius)
+    {
+        this.radius = radius;
+    }
+
+    public double CalculateArea()
+    {
+        return Math.PI * radius * radius; // Implementação do método da interface
+    }
+
+    public void Draw()
+    {
+        Console.WriteLine("Drawing a circle."); // Implementação do método da interface
+    }
+}
 ```
 
-Ao chamar `GetInstance()`, você obterá a mesma instância da classe Singleton toda vez que for chamada em qualquer parte do código. Isso permite que você compartilhe informações e recursos entre diferentes componentes da aplicação.
+Neste exemplo, a interface `IShape` define dois métodos, `CalculateArea()` e `Draw()`, mas não fornece implementações. A classe `Circle` implementa a interface `IShape` e fornece implementações para ambos os métodos da interface.
+
+Resumindo, uma classe abstrata pode ter implementações de métodos, enquanto uma interface só pode ter definições de métodos. Uma classe pode herdar apenas de uma classe abstrata, mas pode implementar várias interfaces. As classes abstratas são úteis quando você quer fornecer uma implementação padrão e também exigir que as classes derivadas forneçam sua própria implementação para certos métodos. As interfaces são úteis quando você deseja definir um conjunto de métodos e propriedades que as classes devem implementar, independentemente de sua hierarquia de herança.
